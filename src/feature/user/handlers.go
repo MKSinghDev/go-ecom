@@ -3,7 +3,6 @@ package user
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/MKSinghDev/go-ecom/src/config"
@@ -32,7 +31,6 @@ func (h *Handler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !auth.ComparePassword(u.Password, []byte(payload.Password)) {
-		log.Println(u.Password, payload.Password)
 		utils.WriteError(w, http.StatusUnauthorized, fmt.Errorf("invalid credentials"))
 		return
 	}
