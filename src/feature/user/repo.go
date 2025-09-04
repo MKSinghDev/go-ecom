@@ -61,10 +61,7 @@ func (ur *Store) CreateUser(user RegisterUserPayload) error {
 		"INSERT INTO users (first_name, last_name, email, password) VALUES ($1,$2,$3,$4)",
 		user.FirstName, user.LastName, user.Email, user.Password,
 	)
-	if err != nil {
-		return err
-	}
-	return nil
+	return err
 }
 
 func scanRowIntoUser(rows pgx.Rows) (*User, error) {

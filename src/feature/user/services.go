@@ -1,2 +1,0 @@
-// Package user
-package user
