@@ -24,7 +24,6 @@ func (ur *Store) GetUserByEmail(email string) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	u := new(User)
 	for rows.Next() {
 		u, err = scanRowIntoUser(rows)
@@ -32,7 +31,6 @@ func (ur *Store) GetUserByEmail(email string) (*User, error) {
 			return nil, err
 		}
 	}
-
 	if u.ID == 0 {
 		return nil, fmt.Errorf("user not found")
 	}
@@ -44,7 +42,6 @@ func (ur *Store) GetUserByID(id int) (*User, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	u := new(User)
 	for rows.Next() {
 		u, err = scanRowIntoUser(rows)
@@ -52,7 +49,6 @@ func (ur *Store) GetUserByID(id int) (*User, error) {
 			return nil, err
 		}
 	}
-
 	if u.ID == 0 {
 		return nil, fmt.Errorf("user not found")
 	}
@@ -68,7 +64,6 @@ func (ur *Store) CreateUser(user RegisterUserPayload) error {
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
