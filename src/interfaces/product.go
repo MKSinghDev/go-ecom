@@ -1,10 +1,12 @@
-package product
+package interfaces
 
 import "time"
 
 type ProductRepo interface {
 	GetProducts() ([]Product, error)
+	GetProductsByIDs(ids []int) ([]Product, error)
 	CreateProduct(product CreateProductPayload) error
+	UpdateProduct(product Product) error
 }
 
 type Product struct {

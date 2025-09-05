@@ -2,14 +2,15 @@
 package user
 
 import (
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
 type Handler struct {
-	repo UserRepo
+	repo interfaces.UserRepo
 }
 
-func NewHandler(repo UserRepo) *Handler {
+func NewHandler(repo interfaces.UserRepo) *Handler {
 	return &Handler{
 		repo,
 	}

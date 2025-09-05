@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/MKSinghDev/go-ecom/src/utils"
 	"github.com/go-playground/validator/v10"
 )
 
 func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
-	var payload CreateProductPayload
+	var payload interfaces.CreateProductPayload
 	if err := utils.ParseJSON(r, &payload); err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
 		return
@@ -21,7 +22,7 @@ func (h *Handler) CreateProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := h.repo.CreateProduct(CreateProductPayload{
+	err := h.repo.CreateProduct(interfaces.CreateProductPayload{
 		Name:        payload.Name,
 		Description: payload.Description,
 		Image:       payload.Image,

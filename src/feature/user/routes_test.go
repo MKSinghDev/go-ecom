@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
@@ -16,7 +17,7 @@ func TestUserServiceHandler(t *testing.T) {
 	handler := NewHandler(userStore)
 
 	t.Run("should fail if the user paload is invalid", func(t *testing.T) {
-		payload := RegisterUserPayload{
+		payload := interfaces.RegisterUserPayload{
 			FirstName: "user",
 			LastName:  "123",
 			Email:     "invalid",
@@ -40,7 +41,7 @@ func TestUserServiceHandler(t *testing.T) {
 	})
 
 	t.Run("should correctly register the user", func(t *testing.T) {
-		payload := RegisterUserPayload{
+		payload := interfaces.RegisterUserPayload{
 			FirstName: "user",
 			LastName:  "123",
 			Email:     "asd@gmail.com",
@@ -66,14 +67,15 @@ func TestUserServiceHandler(t *testing.T) {
 
 type mockUserStore struct{}
 
-func (m *mockUserStore) GetUserByEmail(email string) (*User, error) {
+func (m *mockUserStore) GetUserByEmail(email string) (*interfaces.User, error) {
 	return nil, fmt.Errorf("user not found")
 }
 
-func (m *mockUserStore) GetUserByID(id int) (*User, error) {
+func (m *mockUserStore) GetUserByID(id int) (*interfaces.User, error) {
 	return nil, nil
 }
 
-func (m *mockUserStore) CreateUser(user RegisterUserPayload) error {
+func (m *mockUserStore) CreateUser(user interfaces.RegisterUserPayload) error {
 	return nil
 }
+

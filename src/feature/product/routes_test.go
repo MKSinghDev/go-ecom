@@ -8,6 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
@@ -18,7 +19,7 @@ func TestProductHandler(t *testing.T) {
 	handler := NewHandler(productRepo)
 
 	t.Run("should fail if the product payload is invalid", func(t *testing.T) {
-		payload := CreateProductPayload{
+		payload := interfaces.CreateProductPayload{
 			Name:        "ip",
 			Description: "des",
 			Image:       "img",
@@ -44,7 +45,7 @@ func TestProductHandler(t *testing.T) {
 	})
 
 	t.Run("should correctly create the product", func(t *testing.T) {
-		payload := CreateProductPayload{
+		payload := interfaces.CreateProductPayload{
 			Name:        "MacBook Air M4",
 			Description: "This is the best macbook for software development",
 			Image:       "http://localhost.com/images/image.png",
@@ -70,10 +71,18 @@ func TestProductHandler(t *testing.T) {
 	})
 }
 
-func (r *mockProductRepo) GetProducts() ([]Product, error) {
+func (r *mockProductRepo) GetProducts() ([]interfaces.Product, error) {
 	return nil, nil
 }
 
-func (r *mockProductRepo) CreateProduct(product CreateProductPayload) error {
+func (r *mockProductRepo) GetProductsByIDs(ids []int) ([]interfaces.Product, error) {
+	return nil, nil
+}
+
+func (r *mockProductRepo) CreateProduct(product interfaces.CreateProductPayload) error {
+	return nil
+}
+
+func (r *mockProductRepo) UpdateProduct(product interfaces.Product) error {
 	return nil
 }

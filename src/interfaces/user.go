@@ -1,5 +1,5 @@
-// Package user
-package user
+// Package interfaces
+package interfaces
 
 import "time"
 

@@ -6,13 +6,14 @@ import (
 	"net/http"
 
 	"github.com/MKSinghDev/go-ecom/src/config"
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/MKSinghDev/go-ecom/src/service/auth"
 	"github.com/MKSinghDev/go-ecom/src/utils"
 	"github.com/go-playground/validator/v10"
 )
 
 func (h *Handler) HandleLogin(w http.ResponseWriter, r *http.Request) {
-	var payload LoginUserPayload
+	var payload interfaces.LoginUserPayload
 	if err := utils.ParseJSON(r, &payload); err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
 		return
@@ -46,7 +47,7 @@ func (h *Handler) HandleLogin(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) HandleRegister(w http.ResponseWriter, r *http.Request) {
-	var payload RegisterUserPayload
+	var payload interfaces.RegisterUserPayload
 	if err := utils.ParseJSON(r, &payload); err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
 		return
@@ -70,7 +71,7 @@ func (h *Handler) HandleRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = h.repo.CreateUser(RegisterUserPayload{
+	err = h.repo.CreateUser(interfaces.RegisterUserPayload{
 		FirstName: payload.FirstName,
 		LastName:  payload.LastName,
 		Email:     payload.Email,

@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -19,12 +20,12 @@ func NewRepo(dbpool *pgxpool.Pool) *Store {
 	}
 }
 
-func (ur *Store) GetUserByEmail(email string) (*User, error) {
+func (ur *Store) GetUserByEmail(email string) (*interfaces.User, error) {
 	rows, err := ur.dbpool.Query(context.Background(), "SELECT * FROM users WHERE email = $1", email)
 	if err != nil {
 		return nil, err
 	}
-	u := new(User)
+	u := new(interfaces.User)
 	for rows.Next() {
 		u, err = scanRowIntoUser(rows)
 		if err != nil {
@@ -37,12 +38,12 @@ func (ur *Store) GetUserByEmail(email string) (*User, error) {
 	return u, nil
 }
 
-func (ur *Store) GetUserByID(id int) (*User, error) {
+func (ur *Store) GetUserByID(id int) (*interfaces.User, error) {
 	rows, err := ur.dbpool.Query(context.Background(), "SELECT * FROM users WHERE id = $1", id)
 	if err != nil {
 		return nil, err
 	}
-	u := new(User)
+	u := new(interfaces.User)
 	for rows.Next() {
 		u, err = scanRowIntoUser(rows)
 		if err != nil {
@@ -55,7 +56,7 @@ func (ur *Store) GetUserByID(id int) (*User, error) {
 	return u, nil
 }
 
-func (ur *Store) CreateUser(user RegisterUserPayload) error {
+func (ur *Store) CreateUser(user interfaces.RegisterUserPayload) error {
 	_, err := ur.dbpool.Exec(
 		context.Background(),
 		"INSERT INTO users (first_name, last_name, email, password) VALUES ($1,$2,$3,$4)",
@@ -64,8 +65,8 @@ func (ur *Store) CreateUser(user RegisterUserPayload) error {
 	return err
 }
 
-func scanRowIntoUser(rows pgx.Rows) (*User, error) {
-	user := new(User)
+func scanRowIntoUser(rows pgx.Rows) (*interfaces.User, error) {
+	user := new(interfaces.User)
 	err := rows.Scan(
 		&user.ID,
 		&user.Email,

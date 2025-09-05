@@ -3,14 +3,15 @@ package product
 import (
 	"net/http"
 
+	"github.com/MKSinghDev/go-ecom/src/interfaces"
 	"github.com/gorilla/mux"
 )
 
 type Handler struct {
-	repo ProductRepo
+	repo interfaces.ProductRepo
 }
 
-func NewHandler(repo ProductRepo) *Handler {
+func NewHandler(repo interfaces.ProductRepo) *Handler {
 	return &Handler{repo}
 }
 
