@@ -19,7 +19,7 @@ func (r *Repo) CreateOrder(order interfaces.Order) (int, error) {
 	var id int
 	err := r.dbpool.QueryRow(
 		context.Background(),
-		"INSERT INTO orders (userId, total, status, address) VALUES ($1, $2, $3, $4)",
+		"INSERT INTO orders (user_id, total, status, address) VALUES ($1, $2, $3, $4) RETURNING id",
 		order.UserID, order.Total, order.Status, order.Address,
 	).Scan(&id)
 	if err != nil {

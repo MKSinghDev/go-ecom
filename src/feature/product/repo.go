@@ -4,9 +4,9 @@ package product
 import (
 	"context"
 	"fmt"
-	"strings"
 
 	"github.com/MKSinghDev/go-ecom/src/interfaces"
+	"github.com/MKSinghDev/go-ecom/src/utils"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -39,10 +39,10 @@ func (r *Repo) GetProducts() ([]interfaces.Product, error) {
 }
 
 func (r *Repo) GetProductsByIDs(ids []int) ([]interfaces.Product, error) {
-	placeholders := strings.Repeat(",?", len(ids)-1)
-	query := fmt.Sprintf("SELECT * FROM products WHERE id IN (?%s)", placeholders)
+	pgPlaceholders := utils.BuildPostgreSQLPlaceholders(ids)
+	query := fmt.Sprintf("SELECT * FROM products WHERE id IN (%s)", pgPlaceholders)
 
-	args := make([]interface{}, len(ids))
+	args := make([]any, len(ids))
 	for i, v := range ids {
 		args[i] = v
 	}
